@@ -90,7 +90,7 @@ public class CatchingMole extends JFrame {
             {200, 550}, {530, 550}, {850, 550}
         };
 	
-	int[][] molePositions = { 	//잔디 위치를 정리
+	int[][] molePositions = { 	//두더지 위치를 정리
             {230, 110}, {560, 110}, {880, 110},
             {230, 290}, {560, 290}, {880, 290},
             {230, 460}, {560, 460}, {880, 460}
@@ -698,7 +698,6 @@ public class CatchingMole extends JFrame {
 
 	    textArea.setText(textContent.toString()); // 텍스트 영역에 내용 설정
 
-	    // ... (기타 화면 설정 코드)
 	}
 
 
