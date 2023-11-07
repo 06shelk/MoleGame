@@ -1,4 +1,4 @@
-package catchingMole_13;
+package catchingMole_16;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -30,7 +30,6 @@ public class Music extends Thread {
 		return player.getPosition();
 		
 	}
-	
 	
 	public void close() {
 		isLoop = false;
