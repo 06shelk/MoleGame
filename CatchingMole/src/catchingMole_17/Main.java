@@ -48,7 +48,7 @@ public class Main extends Frame { // 게임 시작 화면
 			public void mousePressed(MouseEvent e) {//마우스를 눌렀을 때
 				//로그인 화면으로 이동
 				dispose();
-				new SignIn();
+				new LoginScreen();
 			}
 		});
         background.add(yesButton);

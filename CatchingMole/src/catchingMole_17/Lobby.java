@@ -28,12 +28,15 @@ public class Lobby extends Frame{ //게임의 로비 화면
 	//버튼 정의
 	private JButton settingButton, startButton, explainButton, storeButton, rankingButton; //설정, 게임시작, 게임설명, 상점, 랭킹 버튼
 	
-	private CoinData coindata;
-	
 	public Lobby(){
-		 coindata = new CoinData(5);
-		 System.out.print(coindata.getCoins());
 		 initializeComponents();
+		 String username = LoginScreen.loggedInUsername;
+	     
+		  // 닉네임 label
+		  JLabel userLabel = new JLabel(username); // 텍스트필드 초기화
+		  userLabel.setFont(new Font("나눔 고딕", Font.BOLD, 25));
+		  userLabel.setBounds(210, 410, 150, 30);
+		  background.add(userLabel);
 	 }
 	 
 	//JButton 공통되는 부분 제외
@@ -149,7 +152,7 @@ public class Lobby extends Frame{ //게임의 로비 화면
 	  		public void mousePressed(MouseEvent e) { //마우스가 클릭했을 때
 	  			// 상점 화면 이동
 	  			dispose();
-				new Store(coindata);
+				new Store();
 	  		}
   		});
 	  	background.add(storeButton); // 시작 버튼 설치
@@ -189,18 +192,10 @@ public class Lobby extends Frame{ //게임의 로비 화면
         background.add(ProLabel);
         
         
-        // 닉네임 label
-        JLabel userLabel = new JLabel("닉네임"); // 텍스트필드 초기화
-        userLabel.setFont(new Font("나눔 고딕", Font.BOLD, 25));
-        userLabel.setBounds(210, 410, 150, 30);
-    	background.add(userLabel);
-
+        
+    	
+    	
 	}
-	
-	private void openStore() {
-        Store storeFrame = new Store(coindata); // Store 클래스의 생성자에 CoinData 객체를 전달합니다.
-        // Store 창을 화면에 표시하기 위한 추가 로직을 여기에 추가할 수 있습니다.
-    }
 	 
 	public static void main(String[] args) {
 		Lobby frame = new Lobby();

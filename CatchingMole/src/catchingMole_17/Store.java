@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 
 public class Store extends Frame implements ActionListener {
 	 private static final String IMAGE_PATH = "../images/";
-	private static CoinData coindata;
 	 private int coins = 5; // 초기 코인 수
 	 
 	 private int item1Count = 0;
@@ -43,7 +42,7 @@ public class Store extends Frame implements ActionListener {
 	        {425, 555}, {625, 555}, {825, 555}
 	};
 	 
-	 public Store(CoinData coindata){
+	 public Store(){
 		 initializeComponents();
 	 }
 	 
@@ -59,7 +58,6 @@ public class Store extends Frame implements ActionListener {
         coinLabel.setFont(new Font("나눔 고딕", Font.BOLD, 25));
         coinLabel.setBounds(1100, 100, 150, 30); // 레이블의 위치와 크기 설정
         background.add(coinLabel);
-
         
 
         // 버튼들의 위치와 크기를 직접 설정
@@ -230,7 +228,7 @@ public class Store extends Frame implements ActionListener {
     }
 	 
 	public static void main(String[] args) {
-		Store frame = new Store(coindata);
+		Store frame = new Store();
     }
 	
 	

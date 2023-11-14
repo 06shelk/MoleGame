@@ -4,10 +4,15 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import catchingMole_12.Main;
 
@@ -17,9 +22,12 @@ public class Setting extends Frame { // 자신의 기록, 로그아웃
 	private ImageIcon logoutButtonEnteredImage = (new ImageIcon(Main.class.getResource(IMAGE_PATH + "logoutButtonEntered.png"))); // 로그인버튼 이미지 클릭
 	private ImageIcon resetButtonImage = (new ImageIcon(Main.class.getResource(IMAGE_PATH + "resetButtonBasic.png")));// out버튼 이미지 기본
 	private ImageIcon resetButtonEnteredImage = (new ImageIcon(Main.class.getResource(IMAGE_PATH + "resetButtonEntered.png")));// out버튼 이미지 클릭
+	JTextArea textArea;
+	JLabel bestLabel;
 	
 	 public Setting(){
 		 initializeComponents();
+		 loadTextAreaContentFromFile();
 	 }
 	 
 	//초기화 코드 작성
@@ -82,11 +90,60 @@ public class Setting extends Frame { // 자신의 기록, 로그아웃
 	  	background.add(outButton);
 	  	
 	  	//최고기록
-	  	JLabel bestLabel = new JLabel("최고기록 : 0"); // 텍스트필드 초기화
+	  	bestLabel = new JLabel("최고기록 : 0"); // 텍스트필드 초기화
 	  	bestLabel.setFont(new Font("나눔 고딕", Font.BOLD, 20));
 	  	bestLabel.setBounds(570, 210, 150, 30);
     	background.add(bestLabel);
+    	
+    	textArea = new JTextArea();
+    	textArea.setFont(new Font("나눔고딕", Font.BOLD, 24));
+
+    	// JScrollPane를 사용하여 JTextArea를 감싸서 스크롤 가능하게 만듦
+    	JScrollPane scrollPane = new JScrollPane(textArea);
+    	scrollPane.setBounds(400, 250, 480, 250); // JScrollPane의 위치 및 크기 설정
+    	scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); // 수직 스크롤바 설정
+    	scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); // 수평 스크롤바 설정
+    	background.add(scrollPane); // JScrollPane를 컨테이너에 추가
+
+    	// JTextArea의 위치 및 크기 설정 및 읽기 전용으로 설정할 필요 없음
+    	// textArea.setBounds(0, 0, 480, 250); // 주석 처리 또는 삭제
+    	// textArea.setEditable(false); // 주석 처리 또는 삭제
+
+    	// Display the score results with dates
+    	StringBuilder textContent = new StringBuilder(); // 표시할 텍스트 내용을 저장할 StringBuilder
+    	textArea.setEditable(false);
+    	textArea.setText(textContent.toString()); // 텍스트 영역에 내용 설정
 	}
+	
+	private void loadTextAreaContentFromFile() {
+	    try (BufferedReader reader = new BufferedReader(new FileReader("/test1/output.txt"))) {
+	        StringBuilder content = new StringBuilder();
+	        String line;
+	        int highestScore = Integer.MIN_VALUE; // 초기값을 가장 작은 값으로 설정
+
+	        while ((line = reader.readLine()) != null) {
+	            content.append(line).append("\n");
+
+	            // 각 줄에서 점수를 추출하여 비교
+	            String[] parts = line.split(":");
+	            if (parts.length == 2) {
+	                String scoreString = parts[1].trim();
+	                int score = Integer.parseInt(scoreString);
+
+	                // 현재까지의 최고 점수보다 큰 경우 갱신
+	                if (score > highestScore) {
+	                    highestScore = score;
+	                }
+	            }
+	        }
+
+	        textArea.setText(content.toString());
+	        bestLabel.setText("최고기록: " + highestScore);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 	
 	public static void main(String[] args) {
 		Setting frame = new Setting();

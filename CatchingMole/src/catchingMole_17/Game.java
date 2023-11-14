@@ -121,6 +121,7 @@ public class Game extends Frame{
       		public void mousePressed(MouseEvent e) {//마우스를 눌렀을 때
       			//로그인 화면으로 이동
       			clickmusic();
+      			timerNum.stopTimer();
       			dispose();
       			new Lobby();
       		}
@@ -185,6 +186,7 @@ public class Game extends Frame{
 	    }
 	}
 	
+	// 두더지 나타내기
 	public void displayMole() {
 	    Random random = new Random();
 	    int basicButtonIndex = random.nextInt(molePositions.length);
@@ -240,6 +242,7 @@ public class Game extends Frame{
 	    startDisappearanceTimer(1500); // 1초 후에 두더지 버튼 숨기기
 	}
 
+	// 두더지 잡기 나타났다, 사라지기
 	public void startDisappearanceTimer(int delay) {
 	    if (disappearanceTimer != null) {
 	        disappearanceTimer.cancel(); // 이전에 실행중인 TimerTask 취소
@@ -284,6 +287,7 @@ public class Game extends Frame{
 	    Result resultFrame = new Result(score); // 현재 게임의 점수를 전달하여 Result 객체 생성
 	    resultFrame.setVisible(true); // 결과 창 보이기
 	    introMusic.close(); // 노래 멈추기
+	    timerNum.stopTimer();
 	    this.dispose(); // 현재 게임 창 닫기
 	}
 	
@@ -308,7 +312,15 @@ public class Game extends Frame{
 		}
 	}
 	
-	
+	public void setItem1Count(int count) {
+        this.item1Count = count;
+        Game gameInstance = new Game();
+
+	     // item1Count 값을 변경하기 위해 setItem1Count 메서드 호출
+	     int newItemCount = 10; // 새로운 값으로 대체
+	     gameInstance.setItem1Count(newItemCount);
+        hammerItemLabel.setText(Integer.toString(item1Count));
+	}
 
 
 	public static void main(String[] args) {

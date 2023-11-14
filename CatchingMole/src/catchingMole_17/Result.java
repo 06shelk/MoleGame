@@ -4,11 +4,17 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+
 
 public class Result extends Frame{ //로그인
 	private ImageIcon loginbuttonImage = (new ImageIcon(Main.class.getResource("../images/loginButton.png"))); // 로그인버튼 이미지 기본
@@ -21,6 +27,7 @@ public class Result extends Frame{ //로그인
     public Result(int score) {
         this.score = score; // 생성자에서 score 값을 받아서 멤버 변수에 저장
         initializeComponents();
+        saveResultToFile(score);
     }
 
 	 
@@ -65,6 +72,22 @@ public class Result extends Frame{ //로그인
     	background.add(coinLabel);
 		
 	}
+	
+	 private void saveResultToFile(int score) {
+	        String filePath = "/test1/output.txt";
+
+	        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true));
+	             PrintWriter pw = new PrintWriter(bw, true)) {
+
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	            String now = dateFormat.format(new Date());
+
+	            pw.println(now + " : " + score);
+
+	        } catch (IOException e) {
+	            e.printStackTrace(); // 예외 처리는 이렇게 간단히 하지 않는 것이 좋습니다.
+	        }
+	    }
 	 
 	public static void main(String[] args) {
 		Result frame = new Result(score);
